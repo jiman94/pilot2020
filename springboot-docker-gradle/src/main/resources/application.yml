@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: create    
+  datasource:
+    url: jdbc:mysql://${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${MYSQL_ENV_MYSQL_DATABASE}
+    username: ${MYSQL_ENV_MYSQL_USER}
+    password: ${MYSQL_ENV_MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+---    
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

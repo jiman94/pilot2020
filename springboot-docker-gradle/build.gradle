@@ -1,0 +1,52 @@
+buildscript {
+  dependencies {
+    classpath('se.transmode.gradle:gradle-docker:1.2')
+  }
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+
+group = 'pilot'
+version = '1.0.1'
+sourceCompatibility = '1.8'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+  
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  
+  implementation 'org.projectlombok:lombok'
+ // implementation 'mysql:mysql-connector-java'
+  
+ compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+  	
+		
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+apply plugin: 'docker'
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+  // push = true
+  applicationName = jar.baseName
+  tagVersion = jar.version
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
