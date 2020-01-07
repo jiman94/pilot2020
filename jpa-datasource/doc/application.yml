@@ -1,0 +1,44 @@
+debug: true
+spring:
+   main:
+     allow-bean-definition-overriding: true
+---
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+---
+spring:      
+  datasource:
+    jdbcUrl: jdbc:mysql://localhost:3306/jpa?serverTimezone=UTC
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+---      
+spring:
+ profiles:
+  default: local
+---
+spring:
+  profiles: local
+name: local-YAML
+environment: local
+server:
+  port: 7070
+  error:
+    whitelabel:
+      enabled: false
+---
+spring: 
+ jpa:
+  generate-ddl: true
+  hibernate:
+   ddl-auto: create-drop
+  database: mysql
+  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  show-sql: true
+  properties: 
+   hibernate: 
+    format_sql: true

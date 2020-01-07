@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration
+	xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- console Log 생성 -->
+	<appender name="consoleAppender"
+		class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss}|%-5p|%-31t|%-31C{1}|%-31M|%-4L|3|==>|%m!%n" />
+		</layout>
+	</appender>
+
+
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="oss.pilot" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="java.sql" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="topasOpenSourceErrorLogAppender" />
+		<!--  -->
+	</logger>
+
+	<logger name="org.apache.catalina" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="topasOpenSourceErrorLogAppender" />
+		<!--  -->
+	</logger>
+
+	<logger name="org.apache.jasper" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="topasOpenSourceErrorLogAppender" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="org.aspectj" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="com.inicis" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	
+	<logger name="org.apache.cxf" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	
+	<root>
+		<level value="error" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+</log4j:configuration>

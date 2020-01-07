@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    			    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	default-lazy-init="true">
+
+
+	<bean id="dataSourceSpied"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="${pilot_db}" />
+		<property name="resourceRef" value="true" />
+	</bean>
+
+
+	<bean id="prototypeDataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	    <constructor-arg ref="dataSourceSpied" />
+	    <property name="logFormatter">
+	      <bean class="topas.log.Log4JdbcCustomFormatter">
+	        <property name="loggingType" value="MULTI_LINE" />
+	        <property name="sqlPrefix" value="SQL         :  "/>
+	      </bean>
+	    </property>
+	</bean>
+	
+
+	<bean id="sqlSessionFactoryAir"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="prototypeDataSource">
+		<property name="configLocation"
+			value="classpath:/config/pilot.mybatis.config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:config/pilot/mybatis/mapper/*Mapper.xml</value>
+				<value>classpath*:config/pilot/mybatis/mapper/*Mapper_Custom.xml
+				</value>
+				</value>
+
+			</list>
+		</property>
+		<property name="plugins">
+			<array>
+				<ref bean="ComDaoInterceptor" />
+			</array>
+		</property>
+	</bean>
+
+	<bean id="ComDaoInterceptor" name="ComDaoInterceptor"
+		class="oss.pilot.interceptor.DaoInterceptor">
+	</bean>
+
+	<bean id="mapperScannerConfigure"
+		class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="oss.pilot.dao.mapper;
+                   oss.agent.*.internal.tfw.dao.mapper" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactoryAir" />
+	</bean>
+
+	<bean id="frameworkTxManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="prototypeDataSource" />
+	</bean>
+
+</beans>

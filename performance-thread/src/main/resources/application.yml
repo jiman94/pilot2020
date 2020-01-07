@@ -1,0 +1,110 @@
+#debug: true # Enable debug logs.
+#trace: true # Enable trace logs.
+# ===================================================================
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+# common-application-properties.html
+# ===================================================================
+logging:
+  level:
+    root: ERROR
+    com.zaxxer.hikari: DEBUG
+    org.hibernate.type: trace 
+    #org.springframework.web: DEBUG 
+    #org.springframework: DEBUG
+    org.springframework:  
+      boot: ERROR
+      transaction: DEBUG
+      web: DEBUG
+      http: DEBUG
+      beans: DEBUG
+    topas: DEBUG
+    java.sql: DEBUG
+    org.apache.catalina: ERROR
+   # org.apache.jasper: ERROR
+    org.apache: ERROR
+    org.mybatis: ERROR
+    org.apache.ibatis: DEBUG
+    oracle: DEBUG
+    org.aspectj: ERROR 
+    freemarker: ERROR
+    net.sf.ehcache: DEBUG
+    org.springframework.cache.ehcache: DEBUG
+##
+server:
+  servlet:
+    contextPath: /
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+  session:
+    cookie:
+    http-only: true
+---
+spring:    
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+    time-zone : Asia/Seoul
+    serialization: 
+      INDENT_OUTPUT: true
+---      
+spring:    
+  devtools:
+    livereload:
+      enabled: true      
+---
+spring: 
+  security: 
+    user: 
+      name: user
+      password: 1234
+      roles: USER
+---      
+#       
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  #<2>
+  endpoint:
+    health:
+      show-details:ALWAYS #ALWAYS # show-details:when-authorized
+  health:
+     status:
+        order:DOWN, OUT_OF_SERVICE, UNKNOWN, ODD, EVEN, UP
+  security: 
+     enabled: false
+#      
+security:
+    basic:
+        enabled: false
+---
+spring:
+  application:
+    name: ibe
+--- 
+#Messages
+spring: 
+  messages: 
+    basename: messages/message
+--- 
+#Redis
+spring: 
+  redis: 
+    host: 1.1.1.1
+    password: password
+    port: 6379
+--- 
+#Encoding UTF-8
+spring: 
+  http: 
+    encoding: 
+      force: true
+---
+multipart:
+  maxFileSiz: 1MB
+  maxRequestSize: 1MB
+  
+   

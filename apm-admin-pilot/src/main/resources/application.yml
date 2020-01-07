@@ -1,0 +1,55 @@
+debug: true
+spring:
+   main:
+     allow-bean-definition-overriding: true
+---
+spring:
+  profiles:
+    active: local # 기본 환경 선택     
+---
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+---  
+spring:
+ datasouce:
+  jmx-enabled: true
+---
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+spring:
+  application:
+    name: spring-boot-admin-sample-reactive
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
+---
+spring:
+  security:
+    user:
+      name: "user"
+      password: "password"
+  boot:
+    admin:
+      client:
+        username: "user"       #These two are needed so that the client
+        password: "password"   #can register at the protected server api
+        instance:
+          metadata:
+            user.name: "user"         #These two are needed so that the server
+            user.password: "password" #can access the protected client endpoints        

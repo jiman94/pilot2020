@@ -1,0 +1,127 @@
+#debug: true # Enable debug logs.
+#trace: true # Enable trace logs.
+#java -Dspring.profiles.active=local -jar pilot-1.0.jar
+
+#spring:
+# main:
+#  allow-bean-definition-overriding: true
+#  web-application-type: none
+
+---
+spring:
+  profiles:
+    active: local
+    
+logging: 
+  config: classpath:logback/logback-${spring.profiles.active}.xml
+  
+---
+server:
+  servlet:
+    contextPath: /backoffice 
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+  session:
+    cookie:
+    http-only: true      
+---  
+spring:       
+  devtools:
+    livereload:
+      enabled: true
+---
+spring: 
+ application: 
+  name: ART
+---
+
+spring:    
+ datasource:
+  url: jdbc:log4jdbc:mysql://localhost:3306/artdev?serverTimezone=UTC
+  username: root
+  password: 1234
+  driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  hikari: 
+   pool-name: hikari-cp
+   maximum-pool-size: 30
+   minimum-idle: 2
+   data-source-properties: 
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+
+--- 
+mybatis: 
+ type-aliases-package: oss.pilot
+ type-handlers-package: oss.pilot
+ configuration: 
+  map-underscore-to-camel-case: true
+  default-fetch-size: 100
+  default-statement-timeout: 30
+---
+spring: 
+ jta: 
+  enabled: false
+  
+---
+spring: 
+ mvc: 
+  view:
+   prefix: /WEB-INF/static/
+   suffix: .html
+---
+
+rest: 
+ basePath: /rest/secure
+ jwtPath: /rest/secure
+ 
+---
+art: 
+ login: 
+  url: /auth/login
+ logout: 
+  url: /auth/logout
+ loginDuration: 24
+ api:
+  host: 127.0.0.1
+
+#jwt configuration
+# secret key for local
+jwt: 
+ secret: 
+  value: local-topas-art
+ token: 
+  prefix: topass
+  authKey: scopes 
+ access: 
+  terminate: 
+   time: 60000000
+ refresh: 
+  terminate: 
+   time: 43200000
+ AT: 
+  header: x-access-token
+ RT: 
+  header: x-access-refresh
+    
+
+---
+#dynamoDB configuration
+amazon: 
+ dynamodb:
+  region: ap-northeast-2
+  endpoint: dynamodb.ap-northeast-2.amazonaws.com
+ aws: 
+  accesskey: 
+  secretkey: 
+ s3: 
+  baseurl: https://s3.ap-northeast-2.amazonaws.com/pilot/logs/
+  
+  
+
+      
+      

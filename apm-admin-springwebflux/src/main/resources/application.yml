@@ -1,0 +1,59 @@
+debug: true
+spring:
+   main:
+     allow-bean-definition-overriding: true
+---
+spring:
+  profiles:
+    active: local # 기본 환경 선택     
+---
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+---  
+spring:
+ datasouce:
+  jmx-enabled: true
+---
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+spring:
+  application:
+    name: spring-boot-admin-sample-reactive
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
+---
+spring:
+  security:
+    user:
+      name: "user"
+      password: "password"
+  boot:
+    admin:
+      client:
+        username: "user"
+        password: "password"
+        instance:
+          metadata:
+            user.name: "user"        
+            user.password: "password"
+---
+port: 27017
+dbname: testdb
+

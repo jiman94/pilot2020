@@ -1,0 +1,4 @@
+mybatis:
+  type-aliases-package: com.parfait.study.simpleevent.model
+  configuration:
+    map-underscore-to-camel-case: true
