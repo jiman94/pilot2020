@@ -17,3 +17,6 @@ http://localhost:8080/authenticate
  "userid":"foo",
  "userpw":"foo"
 }    
+
+
+chrome-extension://aejoelaoggembcahagimdiliamlcdmfm/index.html#requests
