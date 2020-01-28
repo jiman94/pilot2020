@@ -67,3 +67,25 @@ spring:
     password:
   cache: 
     type: redis
+
+--- 
+mybatis: 
+ type-aliases-package: com.topas.artserver
+ type-handlers-package: com.topas.artserver
+ configuration: 
+  map-underscore-to-camel-case: true
+  default-fetch-size: 100
+  default-statement-timeout: 30
+
+---
+#dynamoDB configuration
+amazon: 
+ dynamodb:
+  region: xxx
+  endpoint: xxx.amazonaws.com
+ aws: 
+  accesskey: xxx
+  secretkey: xxx
+ s3: 
+  baseurl: https://s3.xxxx.amazonaws.com/pilot-public/logs/
+ 
