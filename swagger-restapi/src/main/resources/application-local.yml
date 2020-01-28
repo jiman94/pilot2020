@@ -1,0 +1,69 @@
+#debug: true # Enable debug logs.
+#trace: true # Enable trace logs.
+#java -Dspring.profiles.active=local -jar pilot-1.0.jar
+
+#spring.main.allow-bean-definition-overriding=true
+
+spring:
+ main:
+  allow-bean-definition-overriding: true
+#  web-application-type: none
+
+---
+spring:
+  profiles:
+    active: local
+    
+logging: 
+  config: classpath:logback/logback-${spring.profiles.active}.xml  
+---
+# spring boot의 기본 properties
+server.error:
+  include-exception: false
+  include-stacktrace: never # 오류 응답에 stacktrace 내용을 포함할 지 여부
+  path: '/error' # 오류 응답을 처리할 Handler의 경로
+  whitelabel.enabled: true # 서버 오류 발생시 브라우저에 보여줄 기본 페이지 생성 여부
+  
+---
+server:
+  servlet:
+    contextPath: / 
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+  session:
+    cookie:
+    http-only: true      
+---  
+spring:       
+  devtools:
+    livereload:
+      enabled: true
+---
+spring: 
+ application: 
+  name: pilot
+---  
+---  
+spring:  
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate:
+      hbm2ddl.auto: update
+      format_sql: true
+    showSql: true
+    generate-ddl: true
+  url:
+    base: http://localhost:8080
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  cache: 
+    type: redis
