@@ -43,7 +43,7 @@ spring:
 ---
 spring: 
  application: 
-  name: ART
+  name: pilot
 ---
 
 spring:    
