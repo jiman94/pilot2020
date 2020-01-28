@@ -1,7 +1,6 @@
 logging:
   level:
     root: warn
-    com.rest.api: info
   path: /home/ec2-user/app/log
   file:
     max-history: 7
@@ -9,10 +8,10 @@ logging:
 spring:
   profiles: alpha
   datasource:
-    url: jdbc:mysql://127.0.0.1:33060/daddyprogrammer?useUnicode=true&autoReconnect=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:33060/pilot?useUnicode=true&autoReconnect=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: happydaddy
-    password: daddy!@#1004
+    username: root
+    password: 1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties.hibernate:
@@ -21,7 +20,7 @@ spring:
     showSql: true
     generate-ddl: false
   url:
-    base: http://dev-api.daddyprogrammer.org
+    base: http://wwww
   redis:
     host: Standalone Redis 호스트
     port: Standalone Redis 포트
