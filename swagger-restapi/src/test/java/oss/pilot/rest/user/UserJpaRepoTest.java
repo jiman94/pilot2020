@@ -28,8 +28,8 @@ public class UserJpaRepoTest {
 
     @Test
     public void whenFindByUid_thenReturnUser() {
-        String uid = "angrydaddy@gmail.com";
-        String name = "angrydaddy";
+        String uid = "ryu@gmail.com";
+        String name = "ryu";
         // given
         userJpaRepo.save(User.builder()
                 .uid(uid)

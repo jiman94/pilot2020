@@ -43,13 +43,13 @@ public class SignControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        userJpaRepo.save(User.builder().uid("happydaddy@naver.com").name("happydaddy").password(passwordEncoder.encode("1234")).roles(Collections.singletonList("ROLE_USER")).build());
+        userJpaRepo.save(User.builder().uid("ryu@naver.com").name("jiman").password(passwordEncoder.encode("1234")).roles(Collections.singletonList("ROLE_USER")).build());
     }
 
     @Test
     public void signin() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "happydaddy@naver.com");
+        params.add("id", "ryu@naver.com");
         params.add("password", "1234");
         mockMvc.perform(post("/v1/signin").params(params))
                 .andDo(print())
@@ -63,7 +63,7 @@ public class SignControllerTest {
     @Test
     public void signinFail() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "happydaddy@naver.com");
+        params.add("id", "ryu@naver.com");
         params.add("password", "12345");
         mockMvc.perform(post("/v1/signin").params(params))
                 .andDo(print())
@@ -77,9 +77,9 @@ public class SignControllerTest {
     public void signup() throws Exception {
         long epochTime = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "happydaddy_" + epochTime + "@naver.com");
+        params.add("id", "ryu_" + epochTime + "@naver.com");
         params.add("password", "12345");
-        params.add("name", "happydaddy_" + epochTime);
+        params.add("name", "ryu_" + epochTime);
         mockMvc.perform(post("/v1/signup").params(params))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -91,7 +91,7 @@ public class SignControllerTest {
     @Test
     public void signupFail() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "happydaddy@naver.com");
+        params.add("id", "ryu@naver.com");
         params.add("password", "12345");
         params.add("name", "happydaddy");
         mockMvc.perform(post("/v1/signup").params(params))
@@ -115,8 +115,8 @@ public class SignControllerTest {
     @Test @Ignore
     public void signUpSocial() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("accessToken", "HizF3ir9522bMW3shkO0x0T9zBdXFCW1WsF56Qo9dVsAAAFqMwTqHw");
-        params.add("name", "kakaoKing!");
+        params.add("accessToken", "1111");
+        params.add("name", "ryu");
         mockMvc.perform(post("/v1/signup/kakao").params(params))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -127,7 +127,7 @@ public class SignControllerTest {
     @Test @Ignore
     public void signInSocial() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("accessToken", "HizF3ir9522bMW3shkO0x0T9zBdXFCW1WsF56Qo9dVsAAAFqMwTqHw");
+        params.add("accessToken", "xxxxx");
         mockMvc.perform(post("/v1/signin/kakao").params(params))
                 .andDo(print())
                 .andExpect(status().isOk())

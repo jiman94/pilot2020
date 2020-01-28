@@ -19,7 +19,7 @@ public class KakaoServiceTest {
     @Test @Ignore
     public void whenGetKakaoProfile_thenReturnProfile() {
 
-        String accessToken = "xjsMzpQtIr4w13FIQvL3R7BW7X4yvm1KmzXCTwopyWAAAAFqMxEcwA";
+        String accessToken = "xxxx";
         // given
         KakaoProfile profile = kakaoService.getKakaoProfile(accessToken);
         // then

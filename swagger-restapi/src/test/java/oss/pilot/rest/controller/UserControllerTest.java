@@ -1,7 +1,13 @@
 package oss.pilot.rest.controller;
 
-import oss.pilot.rest.model.User;
-import oss.pilot.rest.user.UserJpaRepo;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,13 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.util.Collections;
-import java.util.Optional;
-
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import oss.pilot.rest.model.User;
+import oss.pilot.rest.user.UserJpaRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,9 +49,10 @@ public class UserControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        //userJpaRepo.save(User.builder().uid("happydaddy@naver.com").name("happydaddy").password(passwordEncoder.encode("1234")).roles(Collections.singletonList("ROLE_USER")).build());
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("id", "happydaddy@naver.com");
+        //userJpaRepo.save(User.builder().uid("ryu@naver.com").name("jiman").password(passwordEncoder.encode("1234")).roles(Collections.singletonList("ROLE_USER")).build());
+
+    	MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("id", "ryu@naver.com");
         params.add("password", "1234");
         MvcResult result = mockMvc.perform(post("/v1/signin").params(params))
                 .andDo(print())
@@ -116,8 +118,8 @@ public class UserControllerTest {
     @Test
     public void modify() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("uid", "happydaddy@naver.com");
-        params.add("name", "행복전도사");
+        params.add("uid", "ryu@naver.com");
+        params.add("name", "jiman");
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/v1/user")
                 .header("X-AUTH-TOKEN", token)
@@ -125,12 +127,12 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.name").value("행복전도사"));
+                .andExpect(jsonPath("$.data.name").value("jiman"));
     }
 
     @Test
     public void delete() throws Exception {
-        Optional<User> user = userJpaRepo.findByUid("happydaddy@naver.com");
+        Optional<User> user = userJpaRepo.findByUid("ryu@naver.com");
         assertTrue(user.isPresent());
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/v1/user/" + user.get().getMsrl())
