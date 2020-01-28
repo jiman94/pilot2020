@@ -28,18 +28,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     
-    
-	//compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
-
-// 2안  jedis
-    //compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
-
-//    compile group: 'redis.clients', name: 'jedis'
-//    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.6.2'
-    //compile ('org.springframework.boot:spring-boot-starter-data-redis') {
-//        exclude group: 'io.lettuce', module: 'lettuce-core'
-//    }
-
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
