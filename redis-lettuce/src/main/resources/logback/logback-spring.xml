@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <springProfile name="default, dev">
+        <property name="FILE_NAME" value="dev_sample"/>
+    </springProfile>
+
+    <springProfile name="lab, staging, prod">
+        <property name="FILE_NAME" value="sample"/>
+    </springProfile>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/${FILE_NAME}.log</file>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/${FILE_NAME}_%d{yyyyMMdd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern> ▶ %-5level [%d{HH:mm:ss.SSS}] [%thread] %logger[%method:%line] - %msg%n </pattern>
+        </encoder>
+    </appender>
+    
+    
+    <logger name="com.zaxxer" level="debug"/>
+    <logger name="org.springframework" level="info"/>
+    
+
+    <logger name="topas" level="debug" >
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="FILE" />
+	</logger>
+
+    
+    <logger name="org.apache" level="debug" >
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="FILE" />
+	</logger>
+	
+	
+	<logger name="javax.net" level="debug" >
+           <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="java.security" level="debug" >
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="FILE" />
+	</logger>
+
+
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="FILE" />
+    </root>
+        
+    
+</configuration>
